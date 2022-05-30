@@ -59,3 +59,9 @@ export default function compose(...funcs: Function[]) {
         a(b(...args))
   )
 }
+
+// [f1, f2, f3].reduce((a, b) => (...args) => a(b(...args)))
+
+// f1, f2 => (...args) => f1(f2(...args))
+
+// (...args) => f1(f2(...args)), f3 => (...args) => f1(f2(f3(...args)))
