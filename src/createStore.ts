@@ -15,29 +15,19 @@ import isPlainObject from './utils/isPlainObject'
 import { kindOf } from './utils/kindOf'
 
 /**
- * Creates a Redux store that holds the state tree.
- * The only way to change the data in the store is to call `dispatch()` on it.
+ * 创建一个保存状态树的redux store,改变存储数据的唯一方法是调用' dispatch() ', 你的应用中应该只有一个store. 
+ * 要指定状态树的不同部分如何响应动作，可以使用' combineReducers '将几个reducer组合成一个reducer函数。
  *
- * There should only be a single store in your app. To specify how different
- * parts of the state tree respond to actions, you may combine several reducers
- * into a single reducer function by using `combineReducers`.
+ * @param reducer 给定当前状态树和要处理的操作，返回下一个状态树的函数
  *
- * @param reducer A function that returns the next state tree, given
- * the current state tree and the action to handle.
+ * @param preloadedState 初始状态. 
+ * You may optionally specify it to hydrate the state from the server in universal apps, or to restore a previously serialized user session.
+ * 如果你使用' combineReducers '来生成根reducer函数，它必须是一个与' combineReducers '键形状相同的对象。
  *
- * @param preloadedState The initial state. You may optionally specify it
- * to hydrate the state from the server in universal apps, or to restore a
- * previously serialized user session.
- * If you use `combineReducers` to produce the root reducer function, this must be
- * an object with the same shape as `combineReducers` keys.
+ * @param enhancer The store enhancer
+ * 您可以选择指定它来增强第三方功能，如中间件、time travel, persistence等。Redux附带的唯一store增强器是' applyMiddleware() '
  *
- * @param enhancer The store enhancer. You may optionally specify it
- * to enhance the store with third-party capabilities such as middleware,
- * time travel, persistence, etc. The only store enhancer that ships with Redux
- * is `applyMiddleware()`.
- *
- * @returns A Redux store that lets you read the state, dispatch actions
- * and subscribe to changes.
+ * @returns state, dispatch actions and subscribe.
  */
 export default function createStore<
   S,
@@ -271,6 +261,7 @@ export default function createStore<
   }
 
   /**
+   * 替换store当前使用的reducer来计算状态。
    * Replaces the reducer currently used by the store to calculate the state.
    *
    * You might need this if your app implements code splitting and you want to
