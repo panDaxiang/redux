@@ -14,21 +14,7 @@ import ActionTypes from './utils/actionTypes'
 import isPlainObject from './utils/isPlainObject'
 import { kindOf } from './utils/kindOf'
 
-/**
- * 创建一个保存状态树的redux store,改变存储数据的唯一方法是调用' dispatch() ', 你的应用中应该只有一个store. 
- * 要指定状态树的不同部分如何响应动作，可以使用' combineReducers '将几个reducer组合成一个reducer函数。
- *
- * @param reducer 给定当前状态树和要处理的操作，返回下一个状态树的函数
- *
- * @param preloadedState 初始状态. 
- * You may optionally specify it to hydrate the state from the server in universal apps, or to restore a previously serialized user session.
- * 如果你使用' combineReducers '来生成根reducer函数，它必须是一个与' combineReducers '键形状相同的对象。
- *
- * @param enhancer The store enhancer
- * 您可以选择指定它来增强第三方功能，如中间件、time travel, persistence等。Redux附带的唯一store增强器是' applyMiddleware() '
- *
- * @returns state, dispatch actions and subscribe.
- */
+
 export default function createStore<
   S,
   A extends Action,
@@ -309,14 +295,7 @@ export default function createStore<
   function observable() {
     const outerSubscribe = subscribe
     return {
-      /**
-       * The minimal observable subscription method.
-       * @param observer Any object that can be used as an observer.
-       * The observer object should have a `next` method.
-       * @returns An object with an `unsubscribe` method that can
-       * be used to unsubscribe the observable from the store, and prevent further
-       * emission of values from the observable.
-       */
+      
       subscribe(observer: unknown) {
         if (typeof observer !== 'object' || observer === null) {
           throw new TypeError(
